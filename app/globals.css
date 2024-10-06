@@ -46,12 +46,6 @@ p {
 
 
 
-
-
-
-
-
-
 /* scroll bar */
 ::-webkit-scrollbar {
   width: .43em;
@@ -59,11 +53,11 @@ p {
 }
 
 ::-webkit-scrollbar-track-piece {
-  background: #b2d4f0;
+  background: #b2d4f004;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #519fd3;
+  background: #d9e5eee1;
   border-radius: 0 0 2rem 2rem;
 
 }

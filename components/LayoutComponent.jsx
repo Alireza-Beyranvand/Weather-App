@@ -7,7 +7,7 @@ export default function LayoutComponent({ children }) {
     return (
         <>
             <Navbar />
-            <div className='mt-24'>
+            <div className='mt-3.5'>
                 {children}
             </div>
         </>

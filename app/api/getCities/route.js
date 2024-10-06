@@ -14,7 +14,6 @@ export async function POST(request) {
                 throw new error("no cities")
             }
             const result = await data.json();
-            console.log(result);
             return result;
         } catch (err) {
             console.log(err.message)
