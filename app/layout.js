@@ -1,7 +1,11 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import LayoutComponent from "@/components/LayoutComponent";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import LayoutComponent from "@/components/layout/LayoutComponent";
 import ReduxProvider from "@/lib/redux/reduxProvider/ReduxProvider";
+import NavbarContainer from "@/components/containers/NavbarContainer";
+import FooterContainer from "@/components/containers/FooterContainer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,9 +34,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`} >
         <ReduxProvider>
-          <LayoutComponent>
+          <NavbarContainer />
+          <div className='mt-3.5'>
             {children}
-          </LayoutComponent>
+          </div>
+          <FooterContainer />
         </ReduxProvider>
       </body>
     </html>

@@ -57,7 +57,7 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d9e5eee1;
+  background: #272d31e1;
   border-radius: 0 0 2rem 2rem;
 
 }
@@ -96,5 +96,16 @@ p {
 
   80% {
     background-position: 0% 50%, 50% 50%, 100% 100%
+  }
+}
+
+
+
+
+/* media query */
+
+@media screen and (max-width : 800px) {
+  .logo {
+    display: none !important;
   }
 }

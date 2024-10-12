@@ -35,7 +35,7 @@ export default function CityContent() {
 
     // animation when start
     useEffect(() => {
-        const dealy = setTimeout(() => setShow(pre => !pre), 200)
+        const dealy = setTimeout(() => setShow(pre => !pre), 400)
         return () => clearTimeout(dealy);
     }, [])
 
@@ -75,31 +75,49 @@ export default function CityContent() {
 
     return (
         <>
-            <div className="grid grid-flow-col grid-cols-10 border rounded-t-md drop-shadow-md bg-slate-700 ">
+            <div className="grid
+             grid-flow-col
+              grid-cols-10 
+              border
+               rounded-t-md 
+               drop-shadow-md
+                bg-slate-900 ">
                 <div className="text-white p-2 grid-cols-1">
                     <button className={`${!preCity && "hidden"}`}
                         onClick={backButton}><ArrowBack /></button>
                 </div>
-                <h6 className="text-white p-2 col-span-8">Select city</h6>
+                <h6 className="
+                 col-span-8
+                text-white
+                 p-2 
+                ">Select city</h6>
             </div>
-            <div className="flex flex-col rounded-b-lg overflow-y-scroll border border-slate-400 border-opacity-60" style={{ height: "67.8vh" }}>
+            <div className="flex 
+            flex-col 
+            rounded-b-lg 
+            overflow-y-scroll
+             border
+              border-slate-400
+               border-opacity-60 
+               cityContent" style={{ height: "19rem" }}>
                 {citys?.length > 0 ? citys?.map((citys, index) => (
                     <button className={`text-center
+                         bg-slate-700
                         text-white
                         backdrop-blur-lg
                         rounded-md mx-2
-                        ${index === 0 && "mt-4"}
+                        ${index === 0 && "mt-2"}
                         shadow-2xl
-                        drop-shadow-2xl
                         hover:drop-shadow-2xl
-                        hover:bg-slate-200
-                        hover:text-blue-600
-                        border-2
+                        hover:shadow-xl
+                        hover:bg-slate-600
+                        hover:text-slate-200
+                        border
                         border-solid
                         border-blue-100 
                         mb-1
-                         bg-slate-700
-                          `}
+                        md:text-[1rem]
+                         `}
                         style={{
                             transition: `transform ${index / 9.5}s`,
                             transform: `scale(${show ? 1 : 0})`,

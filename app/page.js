@@ -1,9 +1,8 @@
 
-import CityContent from "@/components/CityContent";
-import SearchCityBox from "@/components/SearchCityBox";
-import ShowContetnWeather from "@/components/ShowContetnWeather";
 
-
+import MainContainer from "@/components/containers/MainContainer";
+import SideBarContainer from "@/components/containers/SideBarContainer";
+import Comments from "@/components/comments/Comments";
 
 export const metadata = {
   title: "Weather App | Home"
@@ -13,20 +12,20 @@ export default async function Home() {
 
   return (
     <>
-      <div className="pt-8">
-        <section className=" grid md:grid-cols-6 sm:grid-cols-1 text-center">
-          <aside className=" md:col-span-2 sm:col-span-1 row-span-3 mb-8">
-            <SearchCityBox />
-            <article className="mx-4 drop-shadow-2xl backdrop-blur-2xl">
-              <CityContent />
-            </article>
+      <div className="flex flex-col pt-5">
+        <section className="grid md:grid-cols-9 sm:grid-cols-1 text-center">
+          <aside className="md:col-span-2 sm:col-span-1 row-span-3 mb-8">
+            <SideBarContainer />
           </aside>
-          <main className="md:col-span-4 sm:col-span-1 md:mr-3">
-            <ShowContetnWeather />
+          <main className="md:col-span-7 sm:col-span-1 md:mr-3 shadow-2xl">
+            <MainContainer />
           </main>
         </section>
+        <section>
+          <Comments />
+        </section>
+        <div />
       </div>
-
     </>
   );
 }
