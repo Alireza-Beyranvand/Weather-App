@@ -8,22 +8,25 @@ export default async function TempAndWind() {
     return (
         <>
             <div className="
-            xl:col-span-2 
-            md:col-span-1
-             flex 
-             justify-center">
+             lg:col-span-2 
+             col-span-1
+             flex
+             lg:flex-row
+             flex-col">
                 <TempAndIcon />
             </div>
             <div className="
-                md:col-span-3
-                 sm:col-span-1 
-                 mx-auto
+                lg:col-span-3
+                 col-span-1 
                   flex 
                 flex-col 
                 justify-between
                  gap-5
                   my-4 
-                  p-3
+                  lg:p-3
+                  p-7
+                  lg:mr-6
+                  mx-auto
                   rounded-lg
                  text-white"
                 style={{ width: "24rem" }}>

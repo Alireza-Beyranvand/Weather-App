@@ -9,7 +9,7 @@ export async function POST(request) {
 
     const getCities = async () => {
         try {
-            const data = await fetch(`https://iran-locations-api.ir/api/v1/fa/cities?state=${cityName.name}`);
+            const data = await fetch(`https://iran-locations-api.ir/api/v1/en/cities?state=${cityName.name}`);
             if (!data.ok) {
                 throw new error("no cities")
             }

@@ -1,40 +1,41 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
+import { useGetWeatherInfoQuery } from '@/lib/redux/api/weatherApi';
+import { useSelector } from 'react-redux';
+import { getCity } from '@/lib/redux/slice/weatherSlice';
 
 export default function Chart() {
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        // فرض کنید بارگذاری داده‌ها نیاز به زمان دارد  
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 1000); // زمان بارگذاری خود را تنظیم کنید  
+    const city = useSelector((state) => getCity(state));
+    const { data: weatherInfo, isLoading, isFetching } = useGetWeatherInfoQuery(city);
+    const Allforct = weatherInfo?.forecast?.forecastday;
+    const dataTempChart = Allforct?.map((a) => a?.day?.avgtemp_c)
 
-        return () => clearTimeout(timer); // پاک کردن تایمر  
-    }, []);
 
     return (
         <>
-            <div className="bg-gray-300 my-4 rounded-2xl md:w-[35rem] w-[25rem] mx-auto ">
-                {loading ? (
+            <div className="lg:w-[40vw] w-[80vw] bg-gray-300 my-4 rounded-2xl mx-auto ">
+                {isLoading || isFetching ? (
                     <div className="h-[201.5px] flex items-center justify-center text-black">Loading...</div>
                 ) : (
                     <LineChart
-                        xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                        xAxis={[{ data: dataTempChart.map((_, index) => index) }]}
                         series={[
                             {
-                                data: [2, 5.5, 2, 8.5, 1.5, 5],
+                                data: dataTempChart,
+                                color: "#090942",
+                                curve: "catmullRom",
+                                label: "Temp _ Day",
                             },
                         ]}
                         height={201.5}
-                        className='md:w-[35rem] w-[25.6rem] mx-auto'
+                        className='lg:w-[40vw] w-[75vw] mx-auto'
                     />
                 )}
             </div>
             <div className="mb-2 bg-slate-600 px-4 rounded-xl">
-                temp-day
+                day-temp C <sup>&deg;</sup>
             </div>
         </>
     );

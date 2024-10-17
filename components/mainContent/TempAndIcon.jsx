@@ -1,82 +1,57 @@
 'use client'
 
 
-import Loading from '@/app/loading'
-import axios from 'axios';
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import Load from '../Load';
+import { useSelector } from 'react-redux';
+import { getCity } from '@/lib/redux/slice/weatherSlice';
+import { useGetWeatherInfoQuery } from '@/lib/redux/api/weatherApi';
 
 export default function TempAndIcon() {
 
 
+  const city = useSelector((state) => getCity(state));
 
-  const [location, setLocation] = useState({});
-  const [weather, setWeather] = useState({});
-
-
-  const apiKey = 'b06c3a6d88ab4b2c969130002240610'; // کلید API خود را وارد کنید  
-  const city = 'Tehran';
+  const { data: weatherInfo, isLoading, isFetching } = useGetWeatherInfoQuery(city);
 
 
-  useEffect(() => {
-
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(`http://api.weatherapi.com/v1/forecast.json `, {
-          params: {
-            key: "b06c3a6d88ab4b2c969130002240610",
-            q: "germani",
-            lang: "fa",
-            days: 6
-          }
-        })
-        setWeather(data)
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-    fetchData();
-  }, [])
-
-
-  let text = weather?.current?.condition?.text;
-  let icon = weather?.current?.condition?.icon;
-  let temp = weather?.current?.condition?.temp_c;
-  let lastTime = weather?.current?.condition?.last_updated
-
-
-
-
+  //  city selected
+  let text = weatherInfo?.current?.condition?.text;
+  let icon = weatherInfo?.current?.condition?.icon;
+  let temp = weatherInfo?.current?.temp_c;
+  let lastTime = weatherInfo?.current?.last_updated;
 
 
   return (
     <>
-      {icon ?
-        <Image src={`https:${icon}`}
-          alt="Weather Icon"
-          width={175}
-          height={90}
-        />
-        : <Loading />}
-      <div className="my-auto text-white mr-8">
-        <div className="flex gap-3">
-          <div className="text-7xl">
-            17
-            <sup>
-              &deg;
-            </sup>
-            C
-            <div className="text-xl -mb-1 ml-4 text-start">
-              RealFeel 17
-              <sup>
-                &deg;
-              </sup>
-              C
+      {
+        isLoading || isFetching ? (
+          <Load />
+        ) : (
+          <>
+            <Image src={`https:${icon}`}
+              alt="Weather Icon"
+              width={175}
+              height={90}
+              className='lg:w-auto w-[12rem] h-[12rem] mx-auto my-auto text-center'
+            />
+            <div className="my-auto text-white mx-auto">
+              <div className="flex gap-3">
+                <div className="lg:text-[3.5rem] text-[4rem]">
+                  {temp}
+                  <sup>
+                    &deg;
+                  </sup>
+                  C
+                  <div className="text-[1.5rem] text-center">
+                    {text}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </>
+        )
+      }
     </>
   )
-}
+};

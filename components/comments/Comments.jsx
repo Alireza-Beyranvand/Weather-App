@@ -3,8 +3,17 @@
 
 export default async function Comments() {
     return (
-        <div className="flex items-center my-36">
-            <div className=" bg-gray-800 text-white mx-auto p-6 rounded-2xl shadow-2xl drop-shadow-2xl w-[40rem] text-center">
+        <div className="flex items-center my-14">
+            <div className=" bg-gray-800
+             text-white
+              mx-auto 
+              p-6 
+              rounded-2xl 
+              shadow-2xl 
+              drop-shadow-2xl 
+              w-[40rem]
+               text-center
+               border">
                 <h1 className="text-3xl font-semibold mb-4">Your opinion is important !</h1>
                 <p className="my-4">Please rate us : </p>
                 <form className="flex items-center justify-center">

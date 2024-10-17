@@ -34,7 +34,7 @@ export async function GET() {
 
     const getCitys = async () => {
         try {
-            const result = await fetch("https://iran-locations-api.ir/api/v1/fa/states");
+            const result = await fetch("https://iran-locations-api.ir/api/v1/en/states");
             if (!result.ok) {
                 console.log(result)
             }

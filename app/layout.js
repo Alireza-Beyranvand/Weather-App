@@ -6,6 +6,7 @@ import LayoutComponent from "@/components/layout/LayoutComponent";
 import ReduxProvider from "@/lib/redux/reduxProvider/ReduxProvider";
 import NavbarContainer from "@/components/containers/NavbarContainer";
 import FooterContainer from "@/components/containers/FooterContainer";
+import Loading from "./loading";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

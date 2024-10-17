@@ -1,11 +1,16 @@
 'use client'
 
-import Loading from "@/app/loading";
+
 import { useEffect, useState } from "react"
 import { ArrowBack } from "@mui/icons-material";
+import Load from "@/components/Load";
+import { useDispatch } from "react-redux";
+import { setCity } from "@/lib/redux/slice/weatherSlice";
 
 
 export default function CityContent() {
+
+    const dispatch = useDispatch();
 
 
     const [citys, setCitys] = useState({});
@@ -14,22 +19,27 @@ export default function CityContent() {
 
 
     useEffect(() => {
-        const getCitys = async () => {
-            try {
-                const response = await fetch("/api/getCitys", {
-                    method: "GET",
-                    headers: { "Content_Type": "application/json" },
-                })
-                if (!response) {
-                    console.log("no response")
+
+        if (!window.navigator.onLine) {
+            alert("please trun on intenet")
+        } else {
+            const getCitys = async () => {
+                try {
+                    const response = await fetch("/api/getCitys", {
+                        method: "GET",
+                        headers: { "Content_Type": "application/json" },
+                    })
+                    if (!response) {
+                        console.log("no response")
+                    }
+                    const result = await response.json();
+                    setCitys(result);
+                } catch (err) {
+                    console.log(err.message)
                 }
-                const result = await response.json();
-                setCitys(result);
-            } catch (err) {
-                console.log(err.message)
-            }
-        };
-        getCitys();
+            };
+            getCitys();
+        }
     }, [])
 
 
@@ -40,10 +50,13 @@ export default function CityContent() {
     }, [])
 
 
+
+
+
     // select city for reciveing cities
     const selectCity = async (cityName) => {
         if (preCity) {
-            console.log(cityName)
+            dispatch(setCity(cityName))
         } else {
             setCitys({})
             try {
@@ -65,6 +78,8 @@ export default function CityContent() {
             }
         }
     };
+
+
 
     // back to citys
     const backButton = () => {
@@ -99,14 +114,16 @@ export default function CityContent() {
              border
               border-slate-400
                border-opacity-60 
-               cityContent" style={{ height: "19rem" }}>
+               cityContent
+               h-[21.2rem]
+               ">
                 {citys?.length > 0 ? citys?.map((citys, index) => (
                     <button className={`text-center
-                         bg-slate-700
+                         bg-slate-900
                         text-white
                         backdrop-blur-lg
                         rounded-md mx-2
-                        ${index === 0 && "mt-2"}
+                        ${index === 0 && "mt-1.5"}
                         shadow-2xl
                         hover:drop-shadow-2xl
                         hover:shadow-xl
@@ -125,7 +142,7 @@ export default function CityContent() {
                         key={index} title={citys.name} onClick={() => selectCity(citys.name)} >
                         <p className="py-2 pb-1">{citys.name}</p>
                     </button>
-                )) : <Loading />
+                )) : <Load />
                 }
             </div>
         </>

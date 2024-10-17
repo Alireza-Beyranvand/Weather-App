@@ -1,9 +1,9 @@
 'use server';
 
-import CityContent from "../Sidebar/CityContent"
-import InformationDeveloper from "../Sidebar/InformationDeveloper"
-import SearchCityBox from "../Sidebar/SearchCityBox"
-import SectionDownloadApp from "../Sidebar/SectionDownloadApp"
+import SearchCityBox from "../Sidebar/section1/SearchCityBox";
+import CityContent from "../Sidebar/section2/CityContent";
+import InformationDeveloper from "../Sidebar/section3/InformationDeveloper";
+import SectionDownloadApp from "../Sidebar/section3/SectionDownloadApp";
 
 
 export default async function SideBarContainer() {
@@ -16,7 +16,7 @@ export default async function SideBarContainer() {
             <div className="text-white md:mt-5 mt-7">
                 <SectionDownloadApp />
             </div>
-            <div>
+            <div className="lg:block hidden">
                 <InformationDeveloper />
             </div>
         </>

@@ -1,11 +1,12 @@
 'use server';
 
 
-import Divider from "../mainContent/section1/Divider";
+import Divider2 from "../mainContent/section4/Divider2";
 import TempAndWind from "../mainContent/section2/TempAndWind";
 import ChartAndCityName from "../mainContent/section3/ChartAndCityName";
+import Slider2 from "./Slider2";
 import SliderContainer from "./SliderContainer"
-
+import DividerAndTime from "../mainContent/section1/DividerAndTime";
 
 
 export default async function MainContainer() {
@@ -17,17 +18,14 @@ export default async function MainContainer() {
         shadow-2xl
          border
           border-slate-400">
-            <Divider name={"Current Weather"} value={"3:20"} />
+            <DividerAndTime />
             <hr />
             <div className="grid
-             xl:grid-cols-5 
-             md:pl-7 
-             md:mt-7
-             md:grid-cols-1
+             lg:grid-cols-5 
+              grid-cols-1
               mt-8
-             bg-slate-700 
+             bg-slate-900 
              rounded-2xl 
-             px-3 
              mx-2
               shadow-xl
                drop-shadow-md">
@@ -35,20 +33,25 @@ export default async function MainContainer() {
             </div>
             <div className="
             grid 
-            sm:grid-cols-2 
-            md:grid-cols-6
+            lg:grid-cols-6
+            md:grid-cols-2 
             text-white
             rounded-2xl 
-             drop-shadow-md 
+             drop-shadow-2xl
+             shadow-xl 
              mt-6
-             mx-2">
+             mx-2
+            lg:bg-slate-900">
                 <ChartAndCityName />
             </div>
             <div>
-                <Divider name={"Weather"} value={"3:20"} style={"mt-7 , border-b"} />
+                <Divider2 name={"Weather"} value={"3:20"} style={"mt-7 , border-b"} />
             </div>
-            <div className="grid grid-cols-1 rounded-lg mt-8 mb-12 text-white w-[88%] mx-auto">
+            <div className="lg:grid hidden grid-cols-1 rounded-lg mt-8 mb-12 text-white w-[88%] mx-auto">
                 <SliderContainer />
+            </div>
+            <div className="lg:hidden sm:grid grid-cols-1 rounded-lg mt-8 mb-12 text-white w-[88%] mx-auto">
+                <Slider2 />
             </div>
         </div>
     )
