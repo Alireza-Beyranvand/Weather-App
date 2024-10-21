@@ -4,7 +4,7 @@ import Chart from "../Chart";
 import CityDetails from "../CityDetails";
 
 
-export default async function ChartAndCityName() {
+export default async function ChartAndCityName({ cityName, weatherData }) {
 
     return (
         <>
@@ -17,7 +17,7 @@ export default async function ChartAndCityName() {
                  flex-col
                  items-center
                  justify-center">
-                <Chart />
+                <Chart weatherData={weatherData} />
             </div>
             <div className="
             bg-slate-900
@@ -30,7 +30,7 @@ export default async function ChartAndCityName() {
                  justify-center
                   gap-8
                      rounded-xl">
-                <CityDetails />
+                <CityDetails cityName={cityName} weatherData={weatherData} />
             </div>
         </>
     )

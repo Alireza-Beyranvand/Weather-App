@@ -3,89 +3,86 @@
 
 import { useEffect, useState } from "react"
 import { ArrowBack } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCities, getSearchCity } from "@/lib/redux/slice/weatherSlice";
+import { useMediaQuery } from "@mui/material";
+import { useRouter } from "next/navigation";
 import Load from "@/components/Load";
-import { useDispatch } from "react-redux";
-import { setCity } from "@/lib/redux/slice/weatherSlice";
 
 
-export default function CityContent() {
+export default function CityContent({ cities }) {
 
-    const dispatch = useDispatch();
+    const router = useRouter();
 
 
-    const [citys, setCitys] = useState({});
-    const [preCity, setPreCity] = useState();
-    const [show, setShow] = useState(false);
+    const md = useMediaQuery(`(max-width : 800px)`);
+
+
+    const [page, setPage] = useState(0);
+    const [citySelected, setCitySelected] = useState();
+    const [filtredCity, setFilteredCity] = useState();
+    const [City, setCity] = useState();
 
 
     useEffect(() => {
-
-        if (!window.navigator.onLine) {
-            alert("please trun on intenet")
-        } else {
-            const getCitys = async () => {
+        const fetchCity = async () => {
+            if (citySelected) {
                 try {
-                    const response = await fetch("/api/getCitys", {
-                        method: "GET",
-                        headers: { "Content_Type": "application/json" },
-                    })
-                    if (!response) {
-                        console.log("no response")
+                    const result = await fetch(`https://iran-locations-api.ir/api/v1/en/cities?state=${citySelected}`);
+                    if (!result.ok) {
+                        console.log("مشکلی در اتصال اینترنت")
+                    } else {
+                        const res = await result.json()
+                        setCity(res[0]?.cities)
                     }
-                    const result = await response.json();
-                    setCitys(result);
                 } catch (err) {
                     console.log(err.message)
                 }
-            };
-            getCitys();
+            }
         }
-    }, [])
+        fetchCity();
+
+    }, [citySelected])
 
 
-    // animation when start
+
+    //search
+    const search = useSelector((state) => getSearchCity(state))
+    // city selected
+
+
+
+    // search
     useEffect(() => {
-        const dealy = setTimeout(() => setShow(pre => !pre), 400)
-        return () => clearTimeout(dealy);
-    }, [])
-
-
-
-
+        if (search) {
+            setPage(0);
+            setFilteredCity(cities.filter((c) => c.name.toLowerCase().startsWith(search)))
+        } else {
+            setFilteredCity(cities)
+        }
+    }, [search])
 
     // select city for reciveing cities
     const selectCity = async (cityName) => {
-        if (preCity) {
-            dispatch(setCity(cityName))
-        } else {
-            setCitys({})
-            try {
-                const data = await fetch("/api/getCities", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ name: cityName })
+        if (page === 1) {
+            if (md) {
+                window.scrollTo({
+                    top: 610,
+                    behavior: 'smooth',
                 })
-                if (!data.ok) {
-                    throw new Error("no cities")
-                }
-                const result = await data.json();
-                setPreCity(citys);
-                setCitys(result[0].cities);
-            } catch (err) {
-                console.log(err.message)
             }
+            router.push(`/${cityName}`)
+        } else {
+            setCitySelected(cityName)
+            setPage((pre) => pre + 1)
         }
     };
 
-
-
     // back to citys
     const backButton = () => {
-        setCitys(preCity);
-        setPreCity();
+        setPage((pre) => pre - 1)
     };
+
 
 
     return (
@@ -98,7 +95,7 @@ export default function CityContent() {
                drop-shadow-md
                 bg-slate-900 ">
                 <div className="text-white p-2 grid-cols-1">
-                    <button className={`${!preCity && "hidden"}`}
+                    <button className={`${page === 0 && "hidden"}`}
                         onClick={backButton}><ArrowBack /></button>
                 </div>
                 <h6 className="
@@ -117,7 +114,7 @@ export default function CityContent() {
                cityContent
                h-[21.2rem]
                ">
-                {citys?.length > 0 ? citys?.map((citys, index) => (
+                {page === 0 && filtredCity?.length > 0 ? filtredCity?.map((citys, index) => (
                     <button className={`text-center
                          bg-slate-900
                         text-white
@@ -135,14 +132,30 @@ export default function CityContent() {
                         mb-1
                         md:text-[1rem]
                          `}
-                        style={{
-                            transition: `transform ${index / 9.5}s`,
-                            transform: `scale(${show ? 1 : 0})`,
-                        }}
-                        key={index} title={citys.name} onClick={() => selectCity(citys.name)} >
-                        <p className="py-2 pb-1">{citys.name}</p>
+                        key={index} title={citys?.name} onClick={() => selectCity(citys?.name)} >
+                        <p className="py-2 pb-1">{citys?.name}</p>
                     </button>
-                )) : <Load />
+                )) : page === 1 && City ? City?.map((citys, index) => (
+                    <button className={`text-center
+                         bg-slate-900
+                        text-white
+                        backdrop-blur-lg
+                        rounded-md mx-2
+                        ${index === 0 && "mt-1.5"}
+                        shadow-2xl
+                        hover:drop-shadow-2xl
+                        hover:shadow-xl
+                        hover:bg-slate-600
+                        hover:text-slate-200
+                        border
+                        border-solid
+                        border-blue-100 
+                        mb-1
+                        md:text-[1rem]
+                         `}
+                        key={index} title={citys?.name} onClick={() => selectCity(citys?.name)} >
+                        <p className="py-2 pb-1">{citys?.name}</p>
+                    </button>)) : <Load />
                 }
             </div>
         </>

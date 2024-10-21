@@ -1,78 +1,50 @@
-'use client';
+'use server';
 
 import Image from "next/image";
-import Slider from "react-slick"
-import bg from "@/public/logo.png"
+import Load from "../Load";
 
-export default function SliderContainer() {
+export default async function SliderContainer({ cityName, weatherData }) {
 
 
-  let settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    // arrows: false
-  };
+  const Allforct = weatherData?.forecast?.forecastday;
 
 
   return (
-    <Slider {...settings}>
-      <div>
-        <div className="flex justify-between gap-6 p-3 flex-col md:flex-row ">
-          <card className="flex flex-col border border-slate-700 p-4 px-8 rounded-xl drop-shadow-lg shadow-lg  bg-slate-800 ">
-            <div className="mx-auto">
-              <Image src={bg} width={100} />
+    <div>
+      <div className="flex justify-evenly overflow-x-scroll ">
+        {Allforct && Allforct?.map((af, index) => (
+          <card key={index}
+            className="flex
+             flex-col
+             border
+              border-slate-700
+               px-4
+               mt-6
+                rounded-xl 
+                drop-shadow-lg 
+                shadow-lg
+                 bg-slate-800">
+            <div className="mx-auto px-5">
+              <Image
+                src={`https:${af?.day?.condition?.icon}`}
+                alt="Weather Icon"
+                width={100}
+                height={50}
+                className='lg:w-auto w-[12rem] h-[5rem] mx-auto my-auto text-center'
+              />
             </div>
             <div>
-              17<sup>&deg;</sup>C
+              {af?.day?.avgtemp_c}<sup>&deg;</sup>C
             </div>
             <div className="mt-1">
-              jul 5
-            </div>
-          </card>
-          <card className="flex flex-col border border-slate-700 p-4 px-8 rounded-xl drop-shadow-lg shadow-lg  bg-slate-800 ">
-            <div className="mx-auto">
-              <Image src={bg} width={100} />
-            </div>
-            <div>
-              17<sup>&deg;</sup>C
+              {af?.day?.condition?.text}
             </div>
             <div className="mt-1">
-              jul 5
+              {af?.date}
             </div>
           </card>
-          <card className="flex flex-col border border-slate-700 p-4 px-8 rounded-xl drop-shadow-lg shadow-lg  bg-slate-800 ">
-            <div className="mx-auto">
-              <Image src={bg} width={100} />
-            </div>
-            <div>
-              17<sup>&deg;</sup>C
-            </div>
-            <div className="mt-1">
-              jul 5
-            </div>
-          </card>
-          <card className="flex flex-col border border-slate-700 p-4 px-8 rounded-xl drop-shadow-lg shadow-lg  bg-slate-800 ">
-            <div className="mx-auto">
-              <Image src={bg} width={100} />
-            </div>
-            <div>
-              17<sup>&deg;</sup>C
-            </div>
-            <div className="mt-1">
-              jul 5
-            </div>
-          </card>
-        </div>
+        ))}
       </div>
-      <div>
-        d
-      </div>
-      <div>
-        d
-      </div>
-    </Slider>
+    </div>
   )
 }

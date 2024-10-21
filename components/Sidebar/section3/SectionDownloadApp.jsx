@@ -20,7 +20,7 @@ export default function SectionDownloadApp() {
                     </div>
                 </div>
                 <div className="flex col-span-2 justify-center">
-                    <Image src={bg} width={80} />
+                    <Image src={bg} width={80} alt="weather app" />
                 </div>
             </div>
             <div className="lg:grid md:hidden grid-cols-3 mx-4 bg-slate-900  rounded-lg mt-2 logo">
@@ -30,7 +30,7 @@ export default function SectionDownloadApp() {
                     </p>
                 </div>
                 <div className="col-span-1">
-                    <Image src={bg2} width={80} />
+                    <Image src={bg2} width={80} alt="weather app" />
                 </div>
             </div>
         </>

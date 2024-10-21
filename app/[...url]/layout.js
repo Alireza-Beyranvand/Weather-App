@@ -2,11 +2,11 @@ import localFont from "next/font/local";
 import "./globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import LayoutComponent from "@/components/layout/LayoutComponent";
+import 'react-toastify/dist/ReactToastify.css';
 import ReduxProvider from "@/lib/redux/reduxProvider/ReduxProvider";
 import NavbarContainer from "@/components/containers/NavbarContainer";
 import FooterContainer from "@/components/containers/FooterContainer";
-import Loading from "./loading";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,6 +36,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable}`} >
         <ReduxProvider>
           <NavbarContainer />
+          <ToastContainer />
           <div className='mt-3.5'>
             {children}
           </div>

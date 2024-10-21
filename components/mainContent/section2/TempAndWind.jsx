@@ -4,16 +4,20 @@ import TempAndIcon from "../TempAndIcon";
 import Wind from "../Wind";
 
 
-export default async function TempAndWind() {
+export default async function TempAndWind({ cityName, weatherData }) {
+
+
+
+
     return (
         <>
-            <div className="
+            <div id="scroll" className="
              lg:col-span-2 
              col-span-1
              flex
              lg:flex-row
              flex-col">
-                <TempAndIcon />
+                <TempAndIcon weatherData={weatherData} />
             </div>
             <div className="
                 lg:col-span-3
@@ -30,7 +34,7 @@ export default async function TempAndWind() {
                   rounded-lg
                  text-white"
                 style={{ width: "24rem" }}>
-                <Wind />
+                <Wind weatherData={weatherData} />
             </div>
         </>
     )

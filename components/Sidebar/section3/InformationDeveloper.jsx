@@ -9,7 +9,7 @@ export default async function InformationDeveloper() {
     return (
         <div className="w-[89%] mx-auto max-w-sm border rounded-lg bg-transparent backdrop-blur-2xl border-gray-700 drop-shadow-xl shadow-xl md:mt-3 mt-8">
             <a href="#">
-                <Image className="rounded-t-lg h-[12.99rem] rounded-[100%] mx-auto drop-shadow-xl shadow-md" src={bg} alt="" width={230} />
+                <Image className="rounded-t-lg h-[12.99rem] rounded-[100%] mx-auto drop-shadow-xl shadow-md" src={bg} alt="weather app" width={230} />
             </a>
             <div className="p-4">
                 <a href="#">

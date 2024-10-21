@@ -1,29 +1,33 @@
-'use client';
+'use server';
 
+export default async function DividerAndTime({ cityName }) {
 
-import Load from "@/components/Load";
-import { useGetTimeQuery } from "@/lib/redux/api/timeApi";
-import { getCity } from "@/lib/redux/slice/weatherSlice";
-import { useSelector } from "react-redux";
+    const timeDate = async () => {
+        try {
+            const result = await fetch(`https://api.keybit.ir/time/?timezone=Asia/tehran`)
+            if (!result.ok) {
+                console.log("error in fetch data")
+            } else {
+                return result.json();
+            }
+        } catch (err) {
+            console.log(err.message)
+        }
+    }
+    const time = await timeDate();
 
+    const showTime = time?.time24?.full?.en
+    const showDate = time?.date?.full?.official?.iso?.en
 
-export default function DividerAndTime({ style }) {
-
-    const CityName = useSelector((state) => getCity(state));
-
-    const { data, isLoading, isFetching } = useGetTimeQuery();
-
-    const date = data?.date?.full?.official?.iso?.en;
-    const time = data?.time24?.full?.en
 
     return (
-        isLoading || isFetching ? <Load /> : (
-            <div className={`header flex justify-between py-4 px-6 ${style} text-white bg-slate-900 rounded`}>
+        (
+            <div className={`header flex justify-between py-4 px-6  text-white bg-slate-900 rounded`}>
                 <div>
-                    {CityName}
+                    {cityName}
                 </div>
                 <div>
-                    {time} | {date}
+                    {showTime} | {showDate}
                 </div>
             </div>
         )
